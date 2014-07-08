@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- For assistance related to logback-translator or configuration -->
+<!-- files in general, please contact the logback user mailing list -->
+<!-- at http://www.qos.ch/mailman/listinfo/logback-user -->
+<!-- -->
+<!-- For professional support please see -->
+<!-- http://www.qos.ch/shop/products/professionalSupport -->
+<!-- -->
+<configuration>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%m%n</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>DEBUG</level>
+		</filter>
+	</appender>
+
+	<appender name="FELOG_FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>/tmp/fe.log</File>
+		<encoder>
+			<pattern>%m%n</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>DEBUG</level>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<maxIndex>2</maxIndex>
+			<FileNamePattern>/tmp/fe.log.%i</FileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>100KB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<appender name="SPLOG_FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>/tmp/sp.log</File>
+		<encoder>
+			<pattern>%m%n</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>DEBUG</level>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<maxIndex>2</maxIndex>
+			<FileNamePattern>/tmp/sp.log.%i</FileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>100KB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<root level="DEBUG">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+	<logger name="org.apache.activemq" level="WARN" />
+
+	<logger name="com.ibm.hmpc" level="DEBUG" additivity="false">
+		<appender-ref ref="FELOG_FILE" />
+	</logger>
+
+	<logger name="com.ibm.hmpc.sp" level="DEBUG" additivity="false">
+		<appender-ref ref="SPLOG_FILE" />
+	</logger>
+
+
+</configuration>

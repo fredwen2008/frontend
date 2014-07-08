@@ -1,0 +1,32 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+	<display-name>Archetype Created Web Application</display-name>
+	<filter>
+		<filter-name>TeeFilter</filter-name>
+		<filter-class>ch.qos.logback.access.servlet.TeeFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>TeeFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<listener>
+		<listener-class>
+			com.ibm.hmpc.sp.SPContextListener
+		</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>frontend</servlet-name>
+		<servlet-class>com.ibm.hmpc.FrontendServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>frontend</servlet-name>
+		<url-pattern>/api</url-pattern>
+	</servlet-mapping>
+
+</web-app>
+
+
